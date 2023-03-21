@@ -10,4 +10,9 @@ setCors(app);
 
 app.use(express.json());
 
+app.post('/v1/transpile', (req, res) => {
+
+  return res.json({ ok: true });
+});
+
 export { app };
