@@ -30,7 +30,7 @@ export class ChatGptTranspilerService implements TranspilerService {
       messages: [
         {
           role: 'user',
-          content: `Convert JSON into TypeScript interfaces: ${json}. Don't send any explanations.`,
+          content: `Convert JSON into TypeScript interfaces: ${json}. Use "MeuJSON" with interface name. Don't send any explanations.`,
         },
       ],
     });
