@@ -16,6 +16,12 @@ const transpilerService = new ChatGptTranspilerService();
 app.post('/v1/transpile', async (req, res) => {
   const { json } = req.body;
 
+  try {
+    JSON.parse(json);
+  } catch (err: Error | any) {
+    throw new Error('O JSON é inválido.');
+  }
+
   const message = await transpilerService.transpile(json);
 
   return res.json({ result: message });
