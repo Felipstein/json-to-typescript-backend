@@ -27,14 +27,14 @@ export class ChatGptTranspilerService implements TranspilerService {
 
   async transpile(json: string, transpilationType: TranspilationType = 'typescript_interface'): Promise<string> {
 
-    console.log('Transpiling json...');
+    console.log(`Transpiling json with ${transpilationType}...`);
 
     const result = await this.openAI.createChatCompletion({
       model: 'gpt-3.5-turbo',
       messages: [
         {
           role: 'user',
-          content: `Convert JSON into ${transpilationPrompt[transpilationType] || transpilationPrompt.typescript_interface}: ${json}. Use "MeuJSON" with interface name. Don't send any explanations.`,
+          content: `Convert JSON into ${transpilationPrompt[transpilationType] || transpilationPrompt.typescript_interface}: ${json}. Use "MeuJSON" as name. Don't send any explanations.`,
         },
       ],
     });
@@ -54,7 +54,7 @@ export class ChatGptTranspilerService implements TranspilerService {
       throw new Error('Não foi possível transpilar o JSON. Houve algum problema no processo, tente novamente mais tarde.');
     }
 
-    console.log('Success transpilation!');
+    console.log(`Success transpilation with ${transpilationType}!`);
 
     return message.content;
   }
