@@ -2,6 +2,8 @@ import express from 'express';
 import 'express-async-errors';
 import 'dotenv/config';
 
+import { APIError } from './errors/APIError';
+
 import { setCors } from './config/cors.config';
 import { ChatGptTranspilerService } from './services/impl/chat-gpt.-transpiler.service';
 
@@ -19,7 +21,7 @@ app.post('/v1/transpile', async (req, res) => {
   try {
     JSON.parse(json);
   } catch (err: Error | any) {
-    throw new Error('O JSON é inválido.');
+    throw new APIError('O JSON é inválido.', 400);
   }
 
   const message = await transpilerService.transpile(json);
