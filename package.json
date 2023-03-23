@@ -5,6 +5,9 @@
   "repository": "https://github.com/Felipstein/json-to-typescript-backend.git",
   "author": "Felipstein <luisfelipe-oliveira@outlook.com.br>",
   "license": "MIT",
+  "engines": {
+    "node": "16.17.1"
+  },
   "scripts": {
     "dev": "tsnd --respawn --transpile-only --exit-child --ignore-watch node_modules src/server.ts",
     "build": "tsup src",
