@@ -6,6 +6,7 @@ import { APIError } from './errors/APIError';
 import { errorHandler } from './middlewares/error-handler';
 import { setCors } from './config/cors.config';
 import { ChatGptTranspilerService } from './services/impl/chat-gpt.-transpiler.service';
+import { isValidTranspilationType } from './types/Transpilations';
 
 const app = express();
 
@@ -16,7 +17,7 @@ app.use(express.json());
 const transpilerService = new ChatGptTranspilerService();
 
 app.post('/v1/transpile', async (req, res) => {
-  const { json } = req.body;
+  const { json, transpilation_type } = req.body;
 
   try {
     JSON.parse(json);
@@ -24,7 +25,13 @@ app.post('/v1/transpile', async (req, res) => {
     throw new APIError('O JSON é inválido.', 400);
   }
 
-  const message = await transpilerService.transpile(json);
+  if(transpilation_type) {
+    if(!isValidTranspilationType(transpilation_type)) {
+      throw new APIError('Tipo de transpilação inválido. Por favor, selecione alguma opção existente.', 400);
+    }
+  }
+
+  const message = await transpilerService.transpile(json, transpilation_type || 'typescript_interface');
 
   return res.json({ result: message });
 });

@@ -2,6 +2,7 @@ import { Configuration, OpenAIApi } from 'openai';
 
 import { env } from '../../config/env.config';
 import { TranspilerService } from '../transpiler.service';
+import { transpilationPrompt, TranspilationType } from '../../types/Transpilations';
 
 /**
  * Implementação do serviço de transpilação utilizando o chatGPT
@@ -24,7 +25,7 @@ export class ChatGptTranspilerService implements TranspilerService {
     this.openAI = new OpenAIApi(configuration);
   }
 
-  async transpile(json: string): Promise<string> {
+  async transpile(json: string, transpilationType: TranspilationType = 'typescript_interface'): Promise<string> {
 
     console.log('Transpiling json...');
 
@@ -33,7 +34,7 @@ export class ChatGptTranspilerService implements TranspilerService {
       messages: [
         {
           role: 'user',
-          content: `Convert JSON into TypeScript interfaces: ${json}. Use "MeuJSON" with interface name. Don't send any explanations.`,
+          content: `Convert JSON into ${transpilationPrompt[transpilationType] || transpilationPrompt.typescript_interface}: ${json}. Use "MeuJSON" with interface name. Don't send any explanations.`,
         },
       ],
     });
