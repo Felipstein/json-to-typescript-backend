@@ -25,6 +25,9 @@ export class ChatGptTranspilerService implements TranspilerService {
   }
 
   async transpile(json: string): Promise<string> {
+
+    console.log('Transpiling json...');
+
     const result = await this.openAI.createChatCompletion({
       model: 'gpt-3.5-turbo',
       messages: [
@@ -34,6 +37,9 @@ export class ChatGptTranspilerService implements TranspilerService {
         },
       ],
     });
+
+    console.log('Transpilation finished.');
+    console.log('Checking result...');
 
     const choices = result.data.choices;
 
@@ -46,6 +52,8 @@ export class ChatGptTranspilerService implements TranspilerService {
     if(!message) {
       throw new Error('Não foi possível transpilar o JSON. Houve algum problema no processo, tente novamente mais tarde.');
     }
+
+    console.log('Success transpilation!');
 
     return message.content;
   }
