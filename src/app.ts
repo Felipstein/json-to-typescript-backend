@@ -3,7 +3,7 @@ import 'express-async-errors';
 import 'dotenv/config';
 
 import { APIError } from './errors/APIError';
-
+import { errorHandler } from './middlewares/error-handler';
 import { setCors } from './config/cors.config';
 import { ChatGptTranspilerService } from './services/impl/chat-gpt.-transpiler.service';
 
@@ -28,5 +28,7 @@ app.post('/v1/transpile', async (req, res) => {
 
   return res.json({ result: message });
 });
+
+app.use(errorHandler);
 
 export { app };
