@@ -1,4 +1,4 @@
-const transpilationsTypes = ['typescript_interface', 'javascript_class', 'java_class', 'java_interface', 'java_abstract_class', 'c#_class', 'xml'] as const;
+const transpilationsTypes = ['typescript_interface', 'javascript_class', 'java_class', 'java_interface', 'java_abstract_class', 'c#_class', 'xml', 'yml'] as const;
 
 export function isValidTranspilationType(transpilationTypeCheck: string): boolean {
   if(!transpilationTypeCheck) {
@@ -18,4 +18,5 @@ export const transpilationPrompt: Record<TranspilationType, string> = {
   java_abstract_class: 'Java abstract class',
   'c#_class': 'C# class',
   xml: 'XML',
+  yml: 'YML',
 };
