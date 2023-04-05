@@ -4,15 +4,22 @@ import 'dotenv/config';
 
 import { APIError } from './errors/APIError';
 import { errorHandler } from './middlewares/error-handler';
-import { setCors } from './config/cors.config';
 import { ChatGptTranspilerService } from './services/impl/chat-gpt.-transpiler.service';
 import { isValidTranspilationType } from './types/Transpilations';
 
 const app = express();
 
-setCors(app);
-
 app.use(express.json());
+
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', '*');
+  res.setHeader('Access-Control-Allow-Headers', '*');
+  res.setHeader('Access-Control-Max-Age', '10');
+
+  next();
+});
+
 
 const transpilerService = new ChatGptTranspilerService();
 
